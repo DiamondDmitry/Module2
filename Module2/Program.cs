@@ -1,8 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.ComponentModel;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.ConstrainedExecution;
+﻿using System.Security.Cryptography;
 
 namespace Module2
 {
@@ -10,29 +6,57 @@ namespace Module2
     {
         static void Main()
         {
-            FruitStore bestFruits = new FruitStore();
-            string fruit = "Orange";
-            bestFruits.OrderProduct(fruit, 5, "Mexico Orange");
-            Console.WriteLine($"Продукт годен: {bestFruits.IsProductExpried(fruit)}");
-            Console.WriteLine($"Цена продукта: {bestFruits.GetProductPrice(fruit)}");
-            Console.WriteLine($"Страна производитель: {bestFruits.GetProductInfo(fruit)}");
+            // Исключение и обработка.
+            // Задача 1: Деление на ноль
+            Console.WriteLine("Введите первое целое число:");
+            int.TryParse(Console.ReadLine(), out int number1);
+            bool loop = false;
 
-            LiquorMart liquorMart = new LiquorMart();
-            string drink = "Scotch whisky";
-            Console.WriteLine();
-            liquorMart.OrderProduct(drink, 20, "Blue Label");
-            Console.WriteLine($"Продукт годен: {liquorMart.IsProductExpried(drink)}");
-            Console.WriteLine($"Цена продукта: {liquorMart.GetProductPrice(drink)}");
-            Console.WriteLine($"Страна производитель: {liquorMart.GetProductInfo(drink)}");
+            do
+            {
+                Console.WriteLine();
+                Console.WriteLine("Введите второе целое число:");
+                int.TryParse(Console.ReadLine(), out int number2);
 
-            CheeseStore cheeseStore = new CheeseStore();
-            string cheese = "Chesse gauda";
-            //string cheese = "Dorblue";
-            Console.WriteLine();
-            cheeseStore.OrderProduct(cheese, 20, "European Cheeses");
-            Console.WriteLine($"Продукт годен: {cheeseStore.IsProductExpried(cheese)}");
-            Console.WriteLine($"Цена продукта: {cheeseStore.GetProductPrice(cheese)}");
-            Console.WriteLine($"Страна производитель: {cheeseStore.GetProductInfo(cheese)}");
+                try
+                {
+                    double result = (double)number1 / number2;
+                    Console.WriteLine("Результат деления:" + result);
+                    loop = false;
+                }
+                catch (DivideByZeroException ex)
+                {
+                    Console.WriteLine("Деление на ноль невозможно!");
+                    loop = true;
+                }
+            }
+            while (loop);
+
+            // Задача 2: Обработка исключения
+            try
+            {
+            File.Open("test.txt", FileMode.Open);
+            }
+            catch (FileNotFoundException ex)
+            { 
+                Console.WriteLine("Файл по указанному пути не найден!");
+            }
+
+            // Задача 3: Обработка ошибок при парсинге чисел
+            try
+            {
+                Console.WriteLine("Введите число:");
+                int number = Int32.Parse(Console.ReadLine());
+            } 
+            catch (FormatException ex)
+            { 
+                Console.WriteLine("Некорректный ввод. Пожалуйста, введите число.");
+            }
+
+            // Расширение типов.
+            // Задача 1: Расширение для строк
+            // Задача 2: Расширение для чисел
+            // Задача 3: Расширение для списков
         }
     }
 }
