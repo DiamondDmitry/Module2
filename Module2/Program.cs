@@ -73,9 +73,21 @@ namespace Module2
             }
 
             // Задача 3: Расширение для списков
-            string[] fruitsArray = {"apple", "banana", "kiwi", "orange", "banana", "grape",
-                                    "red dragon", "orange", "banana","kiwi", "tangerin", "banana"};
-            List<string> fruits = new List<string>(fruitsArray);
+            List<string> fruits = new List<string>() 
+            {
+                "apple", 
+                "banana", 
+                "kiwi", 
+                "orange", 
+                "banana", 
+                "grape",
+                "red dragon", 
+                "orange", 
+                "banana",
+                "kiwi", 
+                "tangerin", 
+                "banana"
+            }; 
 
             Console.WriteLine();
             List<string> clearFruitsList = fruits.RemoveDuplicates();
