@@ -1,8 +1,5 @@
-﻿using Microsoft.VisualBasic;
-using System;
-using System.ComponentModel;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.ConstrainedExecution;
+﻿using Module2.Extensions;
+using System.Security.Cryptography;
 
 namespace Module2
 {
@@ -10,53 +7,94 @@ namespace Module2
     {
         static void Main(string[] args)
         {
-            Circle circle = new Circle();
-            Console.WriteLine(circle.CalculateArea(5, 0, 0));
-            Rectangle rectangle = new Rectangle();
-            Console.WriteLine(rectangle.CalculateArea(6, 5, 0));
+            // Исключение и обработка.
+            // Задача 1: Деление на ноль
+            Console.WriteLine("Введите первое целое число:");
+            int.TryParse(Console.ReadLine(), out int number1);
+            bool loop = true;
+            do
+            {
+                Console.WriteLine();
+                Console.WriteLine("Введите второе целое число:");
+                int.TryParse(Console.ReadLine(), out int number2);
 
-            Dog dog = new Dog();
-            dog.MakeSound();
-            Cat cat = new Cat();
-            cat.MakeSound();
+                try
+                {
+                    int result = number1 / number2;
+                    Console.WriteLine("Результат деления:" + result);
+                    loop = false;
+                }
+                catch (DivideByZeroException ex)
+                {
+                    Console.WriteLine("Деление на ноль невозможно!");
+                }
+            }
+            while (loop);
 
-            TV tv = new TV();
-            tv.TurnOn();
-            tv.TurnOff();
-            Laptop laptop = new Laptop();
-            laptop.TurnOn();
-            laptop.TurnOff();
+            // Задача 2: Обработка исключения
+            try
+            {
+                File.Open("test.txt", FileMode.Open);
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine("Файл не найден!");
+            }
 
-            Bird bird = new Bird();
-            bird.Fly();
-            Airplane airplane = new Airplane();
-            airplane.Fly();
+            // Задача 3: Обработка ошибок при парсинге чисел
+            try
+            {
+                Console.WriteLine();
+                Console.WriteLine("Введите число:");
+                int number = Int32.Parse(Console.ReadLine());
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine("Некорректный ввод. Пожалуйста, введите число.");
+            }
 
+            // Расширение типов.
+            // Задача 1: Расширение для строк
+            Console.WriteLine();
+            Console.WriteLine("Введите предложение из нескольких слов:");
+            string sentence = Console.ReadLine();
+            Console.WriteLine($"В вашем предложении {sentence.CountWordsInString()} слов");
 
+            // Задача 2: Расширение для чисел
+            Console.WriteLine("Введите целое число:");
+            int numberEvenCheck = Int32.Parse(Console.ReadLine());
+            if (numberEvenCheck.IsNumberEven())
+            {
+                Console.WriteLine($"Число \"{numberEvenCheck}\" четное");
+            }
+            else
+            {
+                Console.WriteLine($"Число \"{numberEvenCheck}\" не четное");
+            }
 
-            //FruitStore bestFruits = new FruitStore();
-            //string fruit = "Orange";
-            //bestFruits.OrderProduct(fruit, 5, "Mexico Orange");
-            //Console.WriteLine($"Продукт годен: {bestFruits.IsProductExpried(fruit)}");
-            //Console.WriteLine($"Цена продукта: {bestFruits.GetProductPrice(fruit)}");
-            //Console.WriteLine($"Страна производитель: {bestFruits.GetProductInfo(fruit)}");
+            // Задача 3: Расширение для списков
+            List<string> fruits = new List<string>() 
+            {
+                "apple", 
+                "banana", 
+                "kiwi", 
+                "orange", 
+                "banana", 
+                "grape",
+                "red dragon", 
+                "orange", 
+                "banana",
+                "kiwi", 
+                "tangerin", 
+                "banana"
+            }; 
 
-            //LiquorMart liquorMart = new LiquorMart();
-            //string drink = "Scotch whisky";
-            //Console.WriteLine();
-            //liquorMart.OrderProduct(drink, 20, "Blue Label");
-            //Console.WriteLine($"Продукт годен: {liquorMart.IsProductExpried(drink)}");
-            //Console.WriteLine($"Цена продукта: {liquorMart.GetProductPrice(drink)}");
-            //Console.WriteLine($"Страна производитель: {liquorMart.GetProductInfo(drink)}");
-
-            //CheeseStore cheeseStore = new CheeseStore();
-            //string cheese = "Chesse gauda";
-            ////string cheese = "Dorblue";
-            //Console.WriteLine();
-            //cheeseStore.OrderProduct(cheese, 20, "European Cheeses");
-            //Console.WriteLine($"Продукт годен: {cheeseStore.IsProductExpried(cheese)}");
-            //Console.WriteLine($"Цена продукта: {cheeseStore.GetProductPrice(cheese)}");
-            //Console.WriteLine($"Страна производитель: {cheeseStore.GetProductInfo(cheese)}");
+            Console.WriteLine();
+            List<string> clearFruitsList = fruits.RemoveDuplicates();
+            foreach (string fruit in clearFruitsList)
+            {
+                Console.WriteLine(fruit);
+            }
         }
     }
 }
