@@ -5,7 +5,7 @@ namespace Module2
 {
     internal class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
             // Исключение и обработка.
             // Задача 1: Деление на ноль
